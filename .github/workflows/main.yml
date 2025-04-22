@@ -1,6 +1,9 @@
 name: Main
 
-on: [push]
+on:
+  push:
+    paths-ignore:
+      - 'rendered-argocd-apps/**'
 
 env:
   GHCR_REGISTRY: ghcr.io
