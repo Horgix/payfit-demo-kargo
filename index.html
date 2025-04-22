@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CI/CD Demo</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #1E1E2F; /* Dark but not black */
+            font-family: 'Arial', sans-serif;
+        }
+        .number {
+            font-size: 10rem;
+            color: var(--number-color, #D3D3D3); /* Default pale color */
+            transition: color 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <!-- Change only this number to trigger a new release -->
+    <div id="number" class="number">1</div>
+
+    <script>
+        // Function to generate color based on the number
+        function generateColorForNumber(number) {
+            const hue = (number * 137.5) % 360; // Generate unique hue based on number
+            return `hsl(${hue}, 100%, 75%)`; // Use HSL to create bright pastel colors
+        }
+
+        const numberElement = document.getElementById('number');
+
+        // Get the number from the text content (instead of data-value)
+        const number = parseInt(numberElement.textContent, 10);  // Read the number from the HTML
+
+        // Set the data-value attribute (now only updates once in JavaScript)
+        numberElement.setAttribute('data-value', number);
+
+        // Generate and apply new color based on the number in the file
+        const color = generateColorForNumber(number);
+        numberElement.style.setProperty('--number-color', color);
+    </script>
+</body>
+</html>
+
