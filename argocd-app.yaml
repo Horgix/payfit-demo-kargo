@@ -27,9 +27,6 @@ spec:
       # - name: config
       #   path: files/config.json
 
-      # Release name override (defaults to application name)
-      releaseName: foo
-
       # Helm values files for overriding values in the helm chart
       # The path is relative to the spec.source.path directory defined above
       #valueFiles:
