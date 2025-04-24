@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: payfit-demo-kargo
+  name: payfit-demo-kargo-dev
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
@@ -27,9 +27,6 @@ spec:
       # - name: config
       #   path: files/config.json
 
-      # Release name override (defaults to application name)
-      releaseName: foo
-
       # Helm values files for overriding values in the helm chart
       # The path is relative to the spec.source.path directory defined above
       #valueFiles:
@@ -41,7 +38,7 @@ spec:
       # Values file as block file. This takes precedence over values
       valuesObject:
         image:
-          tag: nightly-20250424-132017
+          tag: nightly-20250424-133718
 
       # Optional namespace to template with. If left empty, defaults to the app's destination namespace.
       namespace: custom-namespace
