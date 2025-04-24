@@ -39,8 +39,9 @@ spec:
       ignoreMissingValueFiles: false
 
       # Values file as block file. This takes precedence over values
-      # valuesObject:
-      #   foo: bar
+      valuesObject:
+        image:
+          tag: "main"
 
       # Optional namespace to template with. If left empty, defaults to the app's destination namespace.
       namespace: custom-namespace
