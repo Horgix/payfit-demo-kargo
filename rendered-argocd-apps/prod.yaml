@@ -1,0 +1,84 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: payfit-demo-kargo
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  labels:
+    name: demo-kargo
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/Horgix/payfit-demo-kargo.git  # Can point to either a Helm chart repo or a git repo.
+    targetRevision: HEAD  # For Helm, this refers to the chart version.
+    path: helm-chart  # This has no meaning for Helm charts pulled directly from a Helm repo instead of git.
+
+    # helm specific config
+    #chart: chart-name  # Set this when pulling directly from a Helm repo. DO NOT set for git-hosted Helm charts.
+    helm:
+      parameters:
+      - name: "ingress.annotations.kubernetes\\.io/tls-acme"
+        value: "true"
+        forceString: true # ensures that value is treated as a string
+
+      # # Use the contents of files as parameters (uses Helm's --set-file)
+      # fileParameters:
+      # - name: config
+      #   path: files/config.json
+
+      # Release name override (defaults to application name)
+      releaseName: foo
+
+      # Helm values files for overriding values in the helm chart
+      # The path is relative to the spec.source.path directory defined above
+      #valueFiles:
+      #- values-prod.yaml
+
+      # Ignore locally missing valueFiles when installing Helm chart. Defaults to false
+      ignoreMissingValueFiles: false
+
+      # Values file as block file. This takes precedence over values
+      valuesObject:
+        image:
+          tag: nightly-20250424-132017
+
+      # Optional namespace to template with. If left empty, defaults to the app's destination namespace.
+      namespace: custom-namespace
+
+  # Destination cluster and namespace to deploy the application
+  destination:
+    # cluster API URL
+    server: https://kubernetes.default.svc
+    # or cluster name
+    # name: in-cluster
+    # The namespace will only be set for namespace-scoped resources that have not set a value for .metadata.namespace
+    namespace: hello-platform-prod
+
+  # Extra information to show in the Argo CD Application details tab
+  info:
+    - name: 'Example:'
+      value: 'https://example.com'
+
+  # Sync policy
+  syncPolicy:
+    automated: # automated sync by default retries failed attempts 5 times with following delays between attempts ( 5s, 10s, 20s, 40s, 80s ); retry controlled using `retry` field.
+      prune: true # Specifies if resources should be pruned during auto-syncing ( false by default ).
+      selfHeal: true # Specifies if partial app sync should be executed when resources are changed only in target Kubernetes cluster and no git change detected ( false by default ).
+      allowEmpty: false # Allows deleting all application resources during automatic syncing ( false by default ).
+    syncOptions:     # Sync options which modifies sync behavior
+    - Validate=false # disables resource validation (equivalent to 'kubectl apply --validate=false') ( true by default ).
+    - CreateNamespace=true # Namespace Auto-Creation ensures that namespace specified as the application destination exists in the destination cluster.
+    - PrunePropagationPolicy=foreground # Supported policies are background, foreground and orphan.
+    - PruneLast=true # Allow the ability for resource pruning to happen as a final, implicit wave of a sync operation
+    - RespectIgnoreDifferences=true # When syncing changes, respect fields ignored by the ignoreDifferences configuration
+    - ApplyOutOfSyncOnly=true # Only sync out-of-sync resources, rather than applying every object in the application
+    managedNamespaceMetadata: # Sets the metadata for the application namespace. Only valid if CreateNamespace=true (see above), otherwise it's a no-op.
+      labels: # The labels to set on the application namespace
+        any: label
+        you: like
+      annotations: # The annotations to set on the application namespace
+        the: same
+        applies: for
+        annotations: on-the-namespace
+  revisionHistoryLimit: 10
