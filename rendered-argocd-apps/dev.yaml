@@ -41,7 +41,7 @@ spec:
       # Values file as block file. This takes precedence over values
       valuesObject:
         image:
-          tag: nightly-20250424-092238
+          tag: nightly-20250424-093316
 
       # Optional namespace to template with. If left empty, defaults to the app's destination namespace.
       namespace: custom-namespace
