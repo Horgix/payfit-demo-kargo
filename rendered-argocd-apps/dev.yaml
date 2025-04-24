@@ -11,7 +11,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/Horgix/payfit-demo-kargo.git  # Can point to either a Helm chart repo or a git repo.
-    targetRevision: NONEXISTING  # For Helm, this refers to the chart version.
+    targetRevision: main  # For Helm, this refers to the chart version.
     path: helm-chart  # This has no meaning for Helm charts pulled directly from a Helm repo instead of git.
 
     # helm specific config
@@ -41,7 +41,7 @@ spec:
       # Values file as block file. This takes precedence over values
       valuesObject:
         image:
-          tag: nightly-20250424-090331
+          tag: nightly-20250424-092238
 
       # Optional namespace to template with. If left empty, defaults to the app's destination namespace.
       namespace: custom-namespace
