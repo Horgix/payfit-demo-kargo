@@ -16,11 +16,9 @@ spec:
 
     #chart: chart-name  # Set this when pulling directly from a Helm repo. DO NOT set for git-hosted Helm charts.
     helm:
-      parameters:
-      - name: "ingress.annotations.kubernetes\\.io/tls-acme"
-        value: "true"
-        forceString: true # ensures that value is treated as a string
-
+      valuesObject:
+        image:
+          tag: TO_BE_TEMPLATED_BY_ENV
       # # Use the contents of files as parameters (uses Helm's --set-file)
       # fileParameters:
       # - name: config
@@ -35,9 +33,6 @@ spec:
       ignoreMissingValueFiles: false
 
       # Values file as block file. This takes precedence over values
-      valuesObject:
-        image:
-          tag: TO_BE_TEMPLATED_BY_ENV
 
   # Destination cluster and namespace to deploy the application
   destination:
