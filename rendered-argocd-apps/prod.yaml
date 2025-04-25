@@ -5,8 +5,8 @@ metadata:
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
-  labels:
-    name: demo-kargo
+  annotations:
+    kargo.akuity.io/authorized-stage: hello-platform:dev
 spec:
   project: default
   source:
@@ -14,14 +14,11 @@ spec:
     targetRevision: HEAD  # For Helm, this refers to the chart version.
     path: helm-chart  # This has no meaning for Helm charts pulled directly from a Helm repo instead of git.
 
-    # helm specific config
     #chart: chart-name  # Set this when pulling directly from a Helm repo. DO NOT set for git-hosted Helm charts.
     helm:
-      parameters:
-      - name: "ingress.annotations.kubernetes\\.io/tls-acme"
-        value: "true"
-        forceString: true # ensures that value is treated as a string
-
+      valuesObject:
+        image:
+          tag: nightly-20250425-140601
       # # Use the contents of files as parameters (uses Helm's --set-file)
       # fileParameters:
       # - name: config
@@ -36,12 +33,6 @@ spec:
       ignoreMissingValueFiles: false
 
       # Values file as block file. This takes precedence over values
-      valuesObject:
-        image:
-          tag: nightly-20250424-140821
-
-      # Optional namespace to template with. If left empty, defaults to the app's destination namespace.
-      namespace: custom-namespace
 
   # Destination cluster and namespace to deploy the application
   destination:
