@@ -5,8 +5,6 @@ metadata:
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
-  labels:
-    name: TO_BE_TEMPLATED_BY_ENV
   annotations:
     kargo.akuity.io/authorized-stage: hello-platform:dev
 spec:
@@ -39,7 +37,7 @@ spec:
       # Values file as block file. This takes precedence over values
       valuesObject:
         image:
-          tag: nightly-20250425-133500
+          tag: nightly-20250425-134622
 
   # Destination cluster and namespace to deploy the application
   destination:
