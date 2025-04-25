@@ -1,12 +1,10 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: payfit-demo-kargo
+  name: TO_BE_TEMPLATED_BY_ENV
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
-  labels:
-    name: TO_BE_TEMPLATED_BY_ENV
   annotations:
     kargo.akuity.io/authorized-stage: hello-platform:dev
 spec:
