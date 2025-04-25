@@ -6,7 +6,9 @@ metadata:
   finalizers:
     - resources-finalizer.argocd.argoproj.io
   labels:
-    name: demo-kargo
+    name: TO_BE_TEMPLATED_BY_ENV
+  annotations:
+    kargo.akuity.io/authorized-stage: hello-platform:dev
 spec:
   project: default
   source:
@@ -14,7 +16,6 @@ spec:
     targetRevision: HEAD  # For Helm, this refers to the chart version.
     path: helm-chart  # This has no meaning for Helm charts pulled directly from a Helm repo instead of git.
 
-    # helm specific config
     #chart: chart-name  # Set this when pulling directly from a Helm repo. DO NOT set for git-hosted Helm charts.
     helm:
       parameters:
@@ -38,10 +39,7 @@ spec:
       # Values file as block file. This takes precedence over values
       valuesObject:
         image:
-          tag: nightly-20250425-130450
-
-      # Optional namespace to template with. If left empty, defaults to the app's destination namespace.
-      namespace: custom-namespace
+          tag: nightly-20250425-133500
 
   # Destination cluster and namespace to deploy the application
   destination:
