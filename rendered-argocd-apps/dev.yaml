@@ -18,7 +18,7 @@ spec:
     helm:
       valuesObject:
         image:
-          tag: nightly-20250425-140601
+          tag: nightly-20250425-135246
       # # Use the contents of files as parameters (uses Helm's --set-file)
       # fileParameters:
       # - name: config
